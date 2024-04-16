@@ -1,0 +1,32 @@
+<div class="p-3">
+    <div class="card">
+        <div class="card-body">
+            <h3>Products Component</h3>
+        </div>
+        <div class="card-body">
+            <div>
+                <input [(ngModel)]="searchKey" type="text" (ngModelChange)="search()">
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="products">
+                    <tr *ngFor="let product of products">
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <button (click)="deleteProduct" class="btn btn-sm btn-danger">Delecte</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="p-3 d-flex justify-content-center bg-dark">
+    <ul class="nav nav-pills">
+        <li>
+            <button (click)="goto('home')" class="btn ms-2" [ngClass]="currentRoute == 'home' ? 'btn-light' : 'btn-outline-light'">Home</button>
+        </li>
+        <li>
+            <button (click)="goto('products')" class="btn ms-2" [ngClass]="currentRoute == 'products' ? 'btn-light' : 'btn-outline-light'">Products</button>
+        </li>
+    </ul>
+</div>
