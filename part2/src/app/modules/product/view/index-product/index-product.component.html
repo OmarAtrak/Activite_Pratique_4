@@ -1,0 +1,130 @@
+<div class="p-3">
+    <div class="card">
+        <div class="card-body">
+            <h3>Products Component</h3>
+        </div>
+        <hr>
+        <div class="card-body">
+            <div class="col col-2 mb-2">
+                <input [(ngModel)]="productStateService.productState.keyword" type="text" (ngModelChange)="loadAllProduct()" class="form-control">
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Checked</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="productStateService.productState.products">
+                    <tr *ngFor="let product of productStateService.productState.products">
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <button (click)="handleCheckProduct(product)" class="btn btn-outline-success">
+                                <i [class]="product.checked ? 'bi bi-check' : 'bi bi-circle'"></i>
+                            </button>
+                        </td>
+                        <td>
+                            @if (authStateService.user) {
+                                <button 
+                                    *ngIf="authStateService.isUserConnected && authStateService.user.isHasRole('ADMIN')"
+                                    [routerLink]="'/admin/products/' + product.id + '/edit'"
+                                    class="btn btn-sm btn-warning text-white me-1"
+                                >
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                            }
+                            @if (authStateService.user) {
+                                <button 
+                                    *ngIf="authStateService.isUserConnected && authStateService.user.isHasRole('ADMIN')"
+                                    (click)="deleteProduct(product)"
+                                    class="btn btn-sm btn-danger"
+                                >
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- pagination -->
+        <div *ngIf="productStateService.productState.products.length > 0" class="row bg-light shadow-sm rounded m-0 mt-3 p-0">
+            <div class="col-1 mt-2 mb-2">
+                <select id="selectPageSize" class="form-select form-select-sm mt-2" (change)="changePageSize($event)">
+                    <option value="5" [selected]="productStateService.productState.pageSize == 5">5</option>
+                    <option value="10" [selected]="productStateService.productState.pageSize == 10">10</option>
+                    <option value="15" [selected]="productStateService.productState.pageSize == 15">15</option>
+                    <option value="50" [selected]="productStateService.productState.pageSize == 50">50</option>
+                </select>
+            </div>
+            <div class="col-11 mt-2 mb-2">
+                <nav  aria-label="Page navigation">
+                    <ul class="pagination justify-content-center pagination-sm mt-2">
+                        <!-- previous page -->
+                        <li class="page-item" [class]="{ disabled: productStateService.productState.currentPage == 1 }">
+                            <button (click)="setPage(productStateService.productState.currentPage - 1)" class="page-link">
+                                Previous
+                            </button>
+                        </li>
+                        <!-- first page -->
+                        <li class="page-item" [class]="{ disabled: productStateService.productState.currentPage == 1 }">
+                            <button (click)="setPage(1)" class="page-link">
+                                First
+                            </button>
+                        </li>
+                
+                        <!-- previous current page -->
+                        <li class="page-item" *ngFor="let item of pages.left">
+                            <button
+                                *ngIf="productStateService.productState.currentPage - item > 0"
+                                (click)="setPage(productStateService.productState.currentPage - item)"
+                                class="page-link"
+                            >
+                                {{ productStateService.productState.currentPage - item }}
+                            </button>
+                        </li>
+                
+                        <!-- current page -->
+                        <li class="page-item active">
+                            <button class="page-link">{{ productStateService.productState.currentPage }}</button>
+                        </li>
+                
+                        <!-- next current page -->
+                        <li class="page-item" *ngFor="let item of pages.right">
+                            <button
+                                *ngIf="productStateService.productState.currentPage + item <= productStateService.productState.totalPages"
+                                (click)="setPage(productStateService.productState.currentPage + item)"
+                                class="page-link"
+                            >
+                                {{ productStateService.productState.currentPage + item }}
+                            </button>
+                        </li>
+                        <!-- last page -->
+                        <li
+                            class="page-item"
+                            [class]="{ disabled: productStateService.productState.currentPage == productStateService.productState.totalPages }"
+                        >
+                            <button (click)="setPage(productStateService.productState.totalPages)" class="page-link">
+                                Last
+                            </button>
+                        </li>
+                
+                        <!-- btn next current page -->
+                        <li
+                            class="page-item"
+                            [class]="{ disabled: productStateService.productState.currentPage == productStateService.productState.totalPages }"
+                        >
+                            <button (click)="setPage(productStateService.productState.currentPage + 1)" class="page-link">
+                                Next
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

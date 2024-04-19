@@ -1,0 +1,33 @@
+<div class="p-3">
+    <div class="card">
+        <h5 class="card-title m-3">Informations</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form [formGroup]="productForm" (ngSubmit)="submit()">
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Name</label>
+                            <input class="form-control" type="text" formControlName="name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="price">Price</label>
+                            <input class="form-control" type="number" min="1" formControlName="price">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="checked">Checked</label>
+                            <input class="form-check-input ms-2 mt-1" type="checkbox" formControlName="checked">
+                        </div>
+                        <button routerLink="/admin/products" class="btn btn-secondary me-2">
+                            <i class="bi bi-arrow-left-circle"></i>
+                            Back
+                        </button>
+                        <button class="btn btn-primary" [disabled]="productForm.invalid">
+                            <i class="bi bi-pencil-square"></i>
+                            Edit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
